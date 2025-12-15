@@ -1,0 +1,30 @@
+#This is to test the API endpoint
+GET http://127.0.0.1:8000/
+
+
+### Predict Survival
+POST http://127.0.0.1:8000/predict
+Content-Type: application/json
+
+{
+  "Pclass": 3,
+  "Sex": 0,
+  "Age": 22,
+  "Fare": 7.25,
+  "Embarked": 0,
+  "FamilySize": 2
+}
+
+
+### Predict Survival with Probability
+POST http://127.0.0.1:8000/predict
+Content-Type: application/json
+
+{
+  "Pclass": 1,
+  "Sex": 1,
+  "Age": 38,
+  "Fare": 71.28,
+  "Embarked": 1,
+  "FamilySize": 2
+}

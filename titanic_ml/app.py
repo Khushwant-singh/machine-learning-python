@@ -19,7 +19,7 @@ class Passenger(BaseModel):
 
 @app.post("/predict")
 def predict_survival(passenger: Passenger):
-    input_df = pd.DateFrame(
+    input_df = pd.DataFrame(
         [[
             passenger.Pclass,
             passenger.Sex,
@@ -32,10 +32,16 @@ def predict_survival(passenger: Passenger):
     )
 
 #make prediction
-    prediction = model.predict(input_df)
+ # Get prediction (0 or 1)
+    prediction = model.predict(input_df)[0]
 
-    return{
-        "survived": bool(prediction[0])
+    # Get probabilities
+    probabilities = model.predict_proba(input_df)[0]
+    survival_probability = probabilities[1]  # probability of Survived = 1
+
+    return {
+        "survived": int(prediction),
+        "survival_probability": round(float(survival_probability), 3)
     }
 
 
