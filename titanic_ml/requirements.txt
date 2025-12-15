@@ -1,0 +1,5 @@
+# Requirements for the project
+#pip install -r requirements.txt
+pandas
+scikit-learn
+joblib
