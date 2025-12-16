@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from pydantic import BaseModel, Field, validator
 import joblib
 import pandas as pd
@@ -6,6 +8,13 @@ import json
 from pathlib import Path
 
 app = FastAPI(title = "Titanic Survival Prediction API ")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 #load the model and features
 with open(Path("model/metadata.json")) as f:

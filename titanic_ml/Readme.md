@@ -39,3 +39,6 @@ VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=humao.r
 
 In order to test apis, I created request.http
 and if the extension is available, there will be a link about each request with the test SendRequest
+
+To start the project, execute 
+python -m uvicorn app:app --reload
