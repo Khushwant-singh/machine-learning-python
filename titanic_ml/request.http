@@ -8,11 +8,12 @@ Content-Type: application/json
 
 {
   "Pclass": 3,
-  "Sex": 0,
+  "Sex": "female",
   "Age": 22,
-  "Fare": 7.25,
-  "Embarked": 0,
-  "FamilySize": 2
+  "Fare": 7000.25,
+  "Embarked": "S",
+  "SibSp": 1,
+  "Parch": 0
 }
 
 
@@ -21,12 +22,13 @@ POST http://127.0.0.1:8000/predict
 Content-Type: application/json
 
 {
-  "Pclass": 1,
-  "Sex": 1,
-  "Age": 38,
-  "Fare": 71.28,
-  "Embarked": 1,
-  "FamilySize": 2
+  "Pclass": 3,
+  "Sex": "male",
+  "Age": 22,
+  "Fare": 7.25,
+  "Embarked": "S",
+  "SibSp": 1,
+  "Parch": 0
 }
 
 ### Invalid request, will throw error due to negative age
@@ -34,10 +36,12 @@ POST http://127.0.0.1:8000/predict
 Content-Type: application/json
 
 {
-  "Pclass": 4,
-  "Sex": 0,
-  "Age": -5,
+  "Pclass": 3,
+  "Sex": "test",
+  "Age": 22,
   "Fare": 7.25,
-  "Embarked": 0,
-  "FamilySize": 2
+  "Embarked": "S",
+  "SibSp": 1,
+  "Parch": 0
 }
+

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
 import joblib
 import pandas as pd
 
@@ -16,30 +16,74 @@ features = joblib.load("model/titanic_features.pkl")
 #     Embarked: int
 #     FamilySize: int
 
-class Passenger(BaseModel):
-    Pclass: int = Field(..., ge=1, le=3, description="Passenger class (1, 2, or 3)")
-    Sex: int = Field(..., ge=0, le=1, description="0 = male, 1 = female")
-    Age: float = Field(..., gt=0, le=100, description="Age in years")
-    Fare: float = Field(..., ge=0, le=600, description="Ticket fare")
-    Embarked: int = Field(..., ge=0, le=2, description="0=S, 1=C, 2=Q")
-    FamilySize: int = Field(..., ge=1, le=11, description="Family size (1–11)")
+# class Passenger(BaseModel):
+#     Pclass: int = Field(..., ge=1, le=3, description="Passenger class (1, 2, or 3)")
+#     Sex: int = Field(..., ge=0, le=1, description="0 = male, 1 = female")
+#     Age: float = Field(..., gt=0, le=100, description="Age in years")
+#     Fare: float = Field(..., ge=0, le=600, description="Ticket fare")
+#     Embarked: int = Field(..., ge=0, le=2, description="0=S, 1=C, 2=Q")
+#     FamilySize: int = Field(..., ge=1, le=11, description="Family size (1–11)")
 
-@app.post("/predict")
-def predict_survival(passenger: Passenger):
+class Passenger(BaseModel):
+    Pclass: int = Field(..., ge=1, le=3)
+    Sex: str
+    Age: float = Field(..., gt=0, le=100)
+    Fare: float = Field(..., ge=0)
+    Embarked: str
+    SibSp: int = Field(..., ge=0)
+    Parch: int = Field(..., ge=0)
+
+    @validator("Sex")
+    def validate_sex(cls, value):
+        allowed = {"male", "female"}
+        if value.lower() not in allowed:
+            raise ValueError("Sex must be 'male' or 'female'")
+        return value.lower()
+
+    @validator("Embarked")
+    def validate_embarked(cls, value):
+        allowed = {"s", "c", "q"}
+        if value.lower() not in allowed:
+            raise ValueError("Embarked must be 'S', 'C', or 'Q'")
+        return value.lower()
+
+
+def preprocess_input(passenger: Passenger) -> pd.DataFrame:
+    # Convert categorical variables
+
+    # Endcode Sex
+    sex_map = {"male": 0, "female": 1}
+    sex_encoded = sex_map[passenger.Sex.lower()]
+
+    # Endcode Embarked
+    embarked_map = {"s": 0, "c": 1, "q": 2}
+    embarked_encoded = embarked_map[passenger.Embarked.lower()]
+
+    # Create FamilySize
+    family_size = passenger.SibSp + passenger.Parch + 1
+
+
+    # Create DataFrame
     input_df = pd.DataFrame(
         [[
             passenger.Pclass,
-            passenger.Sex,
+            sex_encoded,
             passenger.Age,
             passenger.Fare,
-            passenger.Embarked,
-            passenger.FamilySize
+            embarked_encoded,
+            family_size
         ]],
         columns=features
     )
+    return input_df
 
-#make prediction
- # Get prediction (0 or 1)
+
+@app.post("/predict")
+def predict_survival(passenger: Passenger):
+    input_df = preprocess_input(passenger)
+
+    #make prediction
+    # Get prediction (0 or 1)
     prediction = model.predict(input_df)[0]
 
     # Get probabilities
