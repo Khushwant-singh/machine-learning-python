@@ -28,3 +28,16 @@ Content-Type: application/json
   "Embarked": 1,
   "FamilySize": 2
 }
+
+### Invalid request, will throw error due to negative age
+POST http://127.0.0.1:8000/predict
+Content-Type: application/json
+
+{
+  "Pclass": 4,
+  "Sex": 0,
+  "Age": -5,
+  "Fare": 7.25,
+  "Embarked": 0,
+  "FamilySize": 2
+}
