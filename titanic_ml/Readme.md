@@ -26,3 +26,16 @@ Add the required controllers in the app.py
 
 to run the app, use below command
 python -m uvicorn app:app --reload
+
+
+Added 
+Name: REST Client
+Id: humao.rest-client
+Description: REST Client for Visual Studio Code
+Version: 0.25.1
+Publisher: Huachao Mao
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+
+In order to test apis, I created request.http
+and if the extension is available, there will be a link about each request with the test SendRequest
