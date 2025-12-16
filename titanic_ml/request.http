@@ -2,6 +2,11 @@
 GET http://127.0.0.1:8000/
 
 
+###This is to Get Model Info
+
+GET http://127.0.0.1:8000/model-info
+
+
 ### Predict Survival
 POST http://127.0.0.1:8000/predict
 Content-Type: application/json

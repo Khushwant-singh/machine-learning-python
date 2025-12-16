@@ -2,11 +2,20 @@ from fastapi import FastAPI
 from pydantic import BaseModel, Field, validator
 import joblib
 import pandas as pd
+import json 
+from pathlib import Path
 
 app = FastAPI(title = "Titanic Survival Prediction API ")
 
-model = joblib.load("model/titanic_model.pkl")
-features = joblib.load("model/titanic_features.pkl") 
+#load the model and features
+with open(Path("model/metadata.json")) as f:
+    metadata = json.load(f)
+
+MODEL_VERSION = metadata["current_version"]
+MODEL_PATH = Path("model") / MODEL_VERSION
+
+model = joblib.load(MODEL_PATH / "titanic_model.pkl")
+features = joblib.load(MODEL_PATH / "titanic_features.pkl")
 
 # class Passenger(BaseModel):
 #     Pclass: int
@@ -101,3 +110,11 @@ def predict_survival(passenger: Passenger):
 def health_check():
     return {"status": "API is running"}
 
+
+@app.get("/model-info")
+def model_info():
+    return {
+        "model_version": MODEL_VERSION,
+        "description": metadata.get("description", ""),
+        "created_at": metadata.get("created_at", "")
+    }
