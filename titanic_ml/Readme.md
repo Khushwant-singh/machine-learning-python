@@ -1,3 +1,19 @@
+To run the project
+python -m venv .env
+.emv\Scripts\activate.bat
+pip install -r requirements.txt
+python train_model.py
+python train_xgboost.py
+python -m uvicorn app:app --reload
+
+
+Step 0
+Create a virtual environment
+python -m venv ml-venv
+
+Activate the created virtual environment
+ml-venv\Scripts\activate.bat
+
 Step 1
 Install the requirements first
 pip install -r requirements.txt
@@ -42,3 +58,9 @@ and if the extension is available, there will be a link about each request with 
 
 To start the project, execute 
 python -m uvicorn app:app --reload
+
+
+Added XGBoost as version 2 (V2)
+add xgboost in the requirements.txt
+Then
+pip install -r requirements.txt

@@ -1,0 +1,131 @@
+# ==================================================
+# Python bytecode & caches
+# ==================================================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ==================================================
+# Virtual environments (exclude all libs)
+# ==================================================
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.python-version
+
+# ==================================================
+# Package managers
+# ==================================================
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ==================================================
+# Distribution / packaging
+# ==================================================
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# ==================================================
+# FastAPI / ASGI
+# ==================================================
+*.log
+uvicorn.log
+gunicorn.log
+access.log
+error.log
+
+# ==================================================
+# Environment variables / secrets
+# ==================================================
+.env
+.env.*
+*.env
+
+# ==================================================
+# ML / Data Science artifacts
+# ==================================================
+data/
+datasets/
+*.csv
+*.tsv
+*.parquet
+*.feather
+*.h5
+*.hdf5
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.joblib
+
+# Model checkpoints / weights
+models/
+checkpoints/
+*.pt
+*.pth
+*.onnx
+*.pb
+*.ckpt
+
+# ==================================================
+# Experiment tracking
+# ==================================================
+mlruns/
+wandb/
+comet/
+tensorboard/
+runs/
+
+# ==================================================
+# Jupyter / notebooks
+# ==================================================
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints
+
+# ==================================================
+# Testing & coverage
+# ==================================================
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# ==================================================
+# Type checking
+# ==================================================
+.mypy_cache/
+.pyre/
+.pytype/
+
+# ==================================================
+# IDEs / editors
+# ==================================================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ==================================================
+# OS files
+# ==================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==================================================
+# Temporary & runtime files
+# ==================================================
+*.tmp
+*.bak
+*.swp
+*.pid
+*.seed
